@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>jquery.throttle DEMO3 ( parallax for smart phone )</title>
+<link href='//fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+<link href='/common/css/common.css' rel='stylesheet' type='text/css'>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="./js/jquery-1.8.3.min.js"><\/script>')</script>
+<script src="./js/jquery.mousewheel.js"></script>
+<script src="./js/jquery.ba-throttle-debounce.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='./demo.css' rel='stylesheet' type='text/css'>
+
+<style>
+#touchmoveA,
+#touchmoveA_throttle,
+#touchmoveA_debounce,
+#touchmoveB,
+#touchmoveB_throttle,
+#touchmoveB_debounce{
+  position: relative;
+  float: left;
+  margin-left: 1%;
+  width: 15%;
+}
+#touchmoveB{
+  margin-left: 2%;
+}
+
+</style>
+</head>
+<body>
+<div id="content">
+<h1>[DEMO3] This is demo of javascript Event.<br>
+(parallax animation <strong>for smart phone</strong>.)</h1>
+<p>link : <a href="http://codechord.com/2012/12/basic_event_for_parallax/">http://codechord.com/2012/12/basic_event_for_parallax/</a></p>
+<ul>
+  <li>[1] touchmove &amp; css property</li>
+  <li>[2] touchmove &amp; css property &amp; throttle</li>
+  <li>[3] touchmove &amp; css property &amp; debounce</li>
+  <li>[4] touchmove &amp; animation</li>
+  <li>[5] touchmove &amp; animation &amp; throttle</li>
+  <li>[6] touchmove &amp; animation debounce</li>
+</ul>
+</div>
+<p id="letsscroll">↓ Let's scroll ↓</p>
+<div id="touchmoveA">
+  <h2>touchmove<br>
+  (CSS)</h2>
+  <p class="count">0</p>
+  <img src="images/scene1_img1.png" height="150" width="150" alt="">
+</div>
+<div id="touchmoveA_throttle">
+  <h2>touchmove&amp;<br>
+    throttle(CSS)</h2>
+  <p class="count">0</p>
+  <img src="images/scene1_img2.png" height="150" width="150" alt="">
+</div>
+<div id="touchmoveA_debounce">
+  <h2>touchmove &amp;<br>
+    debounce(CSS)</h2>
+  <p class="count">0</p>
+  <img src="images/scene2_img1.png" height="150" width="150" alt="">
+</div>
+
+
+<div id="touchmoveB">
+  <h2>touchmove<br>
+  (Anime)</h2>
+  <p class="count">0</p>
+  <img src="images/scene2_img2.png" height="150" width="150" alt="">
+</div>
+<div id="touchmoveB_throttle">
+  <h2>touchmove&amp;<br>
+    throttle(Anime)</h2>
+  <p class="count">0</p>
+  <img src="images/scene3_img1.png" height="150" width="150" alt="">
+</div>
+<div id="touchmoveB_debounce">
+  <h2>touchmove &amp;<br>
+    debounce(Anime)</h2>
+  <p class="count">0</p>
+  <img src="images/scene3_img2.png" height="150" width="150" alt="">
+</div>
+
+
+<footer id="footer">
+<p id="copyright">by <a href="http://codechord.com/" target="_blank">codechord.com</a></p>
+</footer>
+
+<script>
+;(function($) {
+
+  var eventcnt = {
+    scroll    : 0,
+    mousewheel: 0,
+    throttle  : 0,
+    debounce  : 0,
+    touchmove : 0,
+    touchmove_throttle  : 0,
+    touchmove_debounce  : 0,
+    touchmoveA : 0,
+    touchmoveA_throttle  : 0,
+    touchmoveA_debounce  : 0,
+    touchmoveB : 0,
+    touchmoveB_throttle  : 0,
+    touchmoveB_debounce  : 0
+  };
+  $(function(){
+
+    // With CSS property setting
+    // Touchmove (Smart phone)
+    $(document).on("touchmove",function(){
+      var eventname = "touchmoveA";
+      parallaxCss(eventname);
+    });
+    // Throttle & Touchmove (Smart phone)
+    $(document).on( "touchmove", $.throttle( 250, function(){
+      var eventname = "touchmoveA_throttle";
+      parallaxCss(eventname);
+    } ) );
+    // debounce & Touchmove (Smart phone)
+    $(document).on( "touchmove", $.debounce( 250, function(){
+      var eventname = "touchmoveA_debounce";
+      parallaxCss(eventname);
+    } ) );
+
+    // With jQuery Animation
+    // Touchmove (Smart phone)
+    $(document).on("touchmove",function(){
+      var eventname = "touchmoveB";
+      parallaxJquery(eventname);    });
+    // Throttle & Touchmove (Smart phone)
+    $(document).on( "touchmove", $.throttle( 250, function(){
+      var eventname = "touchmoveB_throttle";
+    } ) );
+    // debounce & Touchmove (Smart phone)
+    $(document).on( "touchmove", $.debounce( 250, function(){
+      var eventname = "touchmoveB_debounce";
+      parallaxJquery(eventname);
+
+    } ) );
+
+    var parallaxCss = function(target){
+      eventcnt[target]++;
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      .css({
+        "top" : 500 + $(window).scrollTop()/20
+      });
+      $("#"+target+" img").css({
+        "top" : 550 + $(window).scrollTop()/20
+      });
+    }
+    var parallaxJquery = function(target){
+      eventcnt[target]++;
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      .stop().animate({
+        "top" : 500 + $(window).scrollTop()/20
+      },300);
+      $("#"+target+" img").stop().animate({
+        "top" : 550 + $(window).scrollTop()/20
+      },300);
+    }
+
+
+  });
+
+})(jQuery);
+
+</script>
+
+</body>
+</html>

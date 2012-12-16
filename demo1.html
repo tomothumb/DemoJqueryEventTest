@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>jquery.throttle DEMO1 ( parallax by css property )</title>
+<link href='//fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+<link href='/common/css/common.css' rel='stylesheet' type='text/css'>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>window.jQuery || document.write('<script src="./js/jquery-1.8.3.min.js"><\/script>')</script>
+<script src="./js/jquery.mousewheel.js"></script>
+<script src="./js/jquery.ba-throttle-debounce.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+<link href='./demo.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<div id="content">
+<h1>[DEMO1] This is demo of javascript Event.<br>
+(parallax animation <strong>by css property</strong>.)</h1>
+<p>link : <a href="http://codechord.com/2012/12/basic_event_for_parallax/">http://codechord.com/2012/12/basic_event_for_parallax/</a></p>
+<ul>
+  <li>[1] scroll : A basic javascript event.</li>
+  <li>[2] mousewheel : A case of using jQuery plugin ( <a href="https://github.com/brandonaaron/jquery-mousewheel" target="_blank">jquery.mousewheel.js</a>)</li>
+  <li>[3] throttle : A case of using jQuery plugin ( <a href="https://github.com/cowboy/jquery-throttle-debounce" target="_blank">jQuery throttle / debounce</a>)</li>
+  <li>[4] debounce : A case of using jQuery plugin ( <a href="https://github.com/cowboy/jquery-throttle-debounce" target="_blank">jQuery throttle / debounce</a>)</li>
+  <li>[5] touchmove : A cass of touchmove event which is event for smartPhone ( iOS, Android).</li>
+  <li>[6] touchmove &amp; throttle : A case of using jQuery plugin ( <a href="https://github.com/cowboy/jquery-throttle-debounce" target="_blank">jQuery throttle / debounce</a>)</li>
+  <li>[7] touchmove &amp; debounce : A case of using jQuery plugin ( <a href="https://github.com/cowboy/jquery-throttle-debounce" target="_blank">jQuery throttle / debounce</a>)</li>
+</ul>
+</div>
+<p id="letsscroll">↓ Let's scroll ↓</p>
+<div id="scroll">
+  <h2>scroll<br>
+  (basic)</h2>
+  <p class="count">0</p>
+  <img src="images/scene1_img1.png" height="150" width="150" alt="">
+</div>
+<div id="mousewheel">
+  <h2>mousewheel<br>
+  (plugin)</h2>
+  <p class="count">0</p>
+  <img src="images/scene1_img2.png" height="150" width="150" alt="">
+</div>
+<div id="throttle">
+  <h2>throttle<br>
+  (plugin)</h2>
+  <p class="count">0</p>
+  <img src="images/scene2_img1.png" height="150" width="150" alt="">
+</div>
+<div id="debounce">
+  <h2>debounce<br>
+  (plugin)</h2>
+  <p class="count">0</p>
+  <img src="images/scene2_img2.png" height="150" width="150" alt="">
+</div>
+<div id="touchmove">
+  <h2>touchmove<br>
+  (smart phone)</h2>
+  <p class="count">0</p>
+  <img src="images/scene3_img1.png" height="150" width="150" alt="">
+</div>
+<div id="touchmove_throttle">
+  <h2>touchmove&amp;<br>
+    throttle</h2>
+  <p class="count">0</p>
+  <img src="images/scene3_img2.png" height="150" width="150" alt="">
+</div>
+<div id="touchmove_debounce">
+  <h2>touchmove &amp;<br>
+    debounce</h2>
+  <p class="count">0</p>
+  <img src="images/scene1_img1.png" height="150" width="150" alt="">
+</div>
+
+
+<footer id="footer">
+<p id="copyright">by <a href="http://codechord.com/" target="_blank">codechord.com</a></p>
+</footer>
+
+<script>
+;(function($) {
+
+  var eventcnt = {
+    scroll    : 0,
+    mousewheel: 0,
+    throttle  : 0,
+    debounce  : 0,
+    touchmove : 0,
+    touchmove_throttle  : 0,
+    touchmove_debounce  : 0
+  };
+  $(function(){
+    // Touchmove (scroll)
+    $(document).on("scroll",function(){
+      var eventname = "scroll";
+      eventcnt[eventname]++;
+      $("#"+eventname+" .count").html(eventcnt[eventname]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      .css({
+        "top" : 500 + $(window).scrollTop()/20
+      });
+      $("#"+eventname+" img").css({
+        "top" : 550 + $(window).scrollTop()/20
+      });
+    });
+    // Mouse Wheel
+    // $('html').bind('mousewheel', function(event, delta) {
+    $(document).on('mousewheel', function(event, delta) {
+      var eventname = "mousewheel";
+      parallaxCss(eventname);
+    });
+    // Throttle
+    $(document).on( "scroll", $.throttle( 250, function(){
+      var eventname = "throttle";
+      parallaxCss(eventname);
+    } ) );
+    // debounce
+    $(document).on( "scroll", $.debounce( 250, function(){
+      var eventname = "debounce";
+      eventcnt[eventname]++;
+      parallaxCss(eventname);
+    } ) );
+
+    // Touchmove (Smart phone)
+    $(document).on("touchmove",function(){
+      var eventname = "touchmove";
+      parallaxCss(eventname);
+    });
+    // Throttle & Touchmove (Smart phone)
+    $(document).on( "touchmove", $.throttle( 250, function(){
+      var eventname = "touchmove_throttle";
+      parallaxCss(eventname);
+    } ) );
+    // debounce & Touchmove (Smart phone)
+    $(document).on( "touchmove", $.debounce( 250, function(){
+      var eventname = "touchmove_debounce";
+      parallaxCss(eventname);
+    } ) );
+
+    var parallaxCss = function(target){
+      eventcnt[target]++;
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      .css({
+        "top" : 500 + $(window).scrollTop()/20
+      });
+      $("#"+target+" img").css({
+        "top" : 550 + $(window).scrollTop()/20
+      });
+    }
+    var parallaxJquery = function(target){
+      eventcnt[target]++;
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      .stop().animate({
+        "top" : 500 + $(window).scrollTop()/20
+      },300);
+      $("#"+target+" img").stop().animate({
+        "top" : 550 + $(window).scrollTop()/20
+      },300);
+    }
+
+  });
+
+})(jQuery);
+
+</script>
+
+</body>
+</html>

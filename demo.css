@@ -1,0 +1,84 @@
+h1{margin: 0;}
+h2{font-size: 18px;}
+.content,
+#content{
+  margin: 20px 50px;
+  padding: 20px 50px;
+}
+#letsscroll{
+  clear:both;
+  bottom: 50px;
+  z-index: 1;
+  display: fixed;
+  text-align: center;
+}
+
+#scroll,
+#mousewheel,
+#throttle,
+#debounce,
+#touchmove,
+#touchmove_throttle,
+#touchmove_debounce,
+#touchmoveA,
+#touchmoveA_throttle,
+#touchmoveA_debounce,
+#touchmoveB,
+#touchmoveB_throttle,
+#touchmoveB_debounce{
+  position: relative;
+  float: left;
+  margin-left: 0.5%;
+  width: 13.5%;
+  height:10000px;
+  border: 1px solid CCCCCC;
+  text-align: center;
+}
+#scroll img,
+#mousewheel img,
+#throttle img,
+#debounce img,
+#touchmove img,
+#touchmove_throttle img,
+#touchmove_debounce img,
+#touchmoveA img,
+#touchmoveA_throttle img,
+#touchmoveA_debounce img,
+#touchmoveB img,
+#touchmoveB_throttle img,
+#touchmoveB_debounce img{
+  position: fixed;
+  top:550px;
+  text-align: center;
+}
+#scroll .count,
+#mousewheel .count,
+#throttle .count,
+#debounce .count,
+#touchmove .count,
+#touchmove_throttle .count,
+#touchmove_debounce .count,
+#touchmoveA .count,
+#touchmoveA_throttle .count,
+#touchmoveA_debounce .count,
+#touchmoveB .count,
+#touchmoveB_throttle .count,
+#touchmoveB_debounce .count{
+  position: fixed;
+  top:500px;
+  text-align: center;
+}
+#scroll   { background: #EEE;}
+#mousewheel{background: #DDD;}
+#throttle { background: #CCC;}
+#debounce { background: #BBB;}
+#touchmove{ background: #AAA;}
+#touchmove_throttle{ background: #999;}
+#touchmove_debounce{ background: #888;}
+
+#touchmoveA{ background: #EEE;}
+#touchmoveA_throttle{ background: #DDD;}
+#touchmoveA_debounce{ background: #CCC;}
+#touchmoveB{ background: #AAA;}
+#touchmoveB_throttle{ background: #999;}
+#touchmoveB_debounce{ background: #888;}
