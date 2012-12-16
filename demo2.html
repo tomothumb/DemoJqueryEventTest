@@ -71,7 +71,7 @@
   <h2>touchmove &amp;<br>
     debounce</h2>
   <p class="count">0</p>
-  <img src="images/scene1_img1.png" height="150" width="150" alt="">
+  <img src="images/scene4_img1.png" height="150" width="150" alt="">
 </div>
 
 
@@ -132,7 +132,7 @@
 
     var parallaxCss = function(target){
       eventcnt[target]++;
-      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (moved)")
       .css({
         "top" : 500 + $(window).scrollTop()/20
       });
@@ -142,7 +142,7 @@
     }
     var parallaxJquery = function(target){
       eventcnt[target]++;
-      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (moved)")
       .stop().animate({
         "top" : 500 + $(window).scrollTop()/20
       },300);

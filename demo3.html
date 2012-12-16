@@ -145,7 +145,7 @@
 
     var parallaxCss = function(target){
       eventcnt[target]++;
-      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (moved)")
       .css({
         "top" : 500 + $(window).scrollTop()/20
       });
@@ -155,7 +155,7 @@
     }
     var parallaxJquery = function(target){
       eventcnt[target]++;
-      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (scrolltop)")
+      $("#"+target+" .count").html(eventcnt[target]+" times called.<br>"+$(window).scrollTop() +"px (moved)")
       .stop().animate({
         "top" : 500 + $(window).scrollTop()/20
       },300);
